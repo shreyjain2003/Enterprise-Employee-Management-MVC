@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Employee Management</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            transition: background 0.3s ease;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background: #212529;
+            padding-top: 20px;
+            position: fixed;
+            width: 230px;
+        }
+
+            .sidebar a {
+                color: #ccc;
+                display: block;
+                padding: 12px 20px;
+                text-decoration: none;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background: #343a40;
+                    color: white;
+                }
+
+        .content {
+            margin-left: 230px;
+            padding: 20px;
+        }
+
+        .topbar {
+            background: #ffffff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .animated-btn {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .animated-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+
+        .dark-mode {
+            background-color: #121212 !important;
+            color: white !important;
+        }
+
+            .dark-mode .topbar {
+                background: #1e1e1e;
+            }
+
+            .dark-mode .sidebar {
+                background: #000;
+            }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🔥 Sidebar -->
+    <div class="sidebar">
+        <h4 class="text-center text-white mb-4">
+            <i class="fas fa-building"></i> Admin Panel
+        </h4>
+
+        <a asp-controller="Department" asp-action="Index">
+            <i class="fas fa-sitemap me-2"></i> Departments
+        </a>
+
+        <a asp-controller="Employee" asp-action="Index">
+            <i class="fas fa-users me-2"></i> Employees
+        </a>
+    </div>
+
+    <!-- 🔥 Main Content -->
+    <div class="content">
+
+        <!-- Topbar -->
+        <div class="topbar d-flex justify-content-between align-items-center">
+
+            <!-- 🔍 Search -->
+            <form asp-controller="Employee" asp-action="Index" method="get" class="d-flex">
+                <input class="form-control me-2"
+                       type="search"
+                       name="searchString"
+                       placeholder="Search employee..." />
+
+                <button class="btn btn-outline-primary animated-btn" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            <!-- 🌙 Dark Mode Toggle -->
+            <button class="btn btn-dark animated-btn" onclick="toggleDarkMode()">
+                <i class="fas fa-moon"></i>
+            </button>
+
+        </div>
+
+        <!-- Page Content -->
+        <div class="mt-4">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
